@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Moonlight Group — Phân tích toàn diện 3 trụ cột × CASAN</title>
+<style>
+:root{
+--navy:#f0f4f8;--navy2:#ffffff;--navy3:#f8fafc;
+--blue:#1e40af;--blue2:#3b82f6;--blue3:#2563eb;
+--purple:#7c3aed;--purple2:#a855f7;
+--teal:#0d9488;--teal2:#0f766e;
+--amber:#d97706;--amber2:#b45309;
+--green:#059669;--red:#dc2626;--orange:#ea580c;
+--gray:#64748b;--gray2:#475569;--gray3:#334155;
+--border:rgba(0,0,0,0.10);--border2:rgba(0,0,0,0.18);
+--text:#0f172a;--text2:#334155;--text3:#64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f0f4f8;color:#0f172a;font-family:-apple-system,Inter,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;}
+.header{background:linear-gradient(135deg,#1e3a5f 0%,#1e40af 50%,#312e81 100%);border-bottom:1px solid rgba(0,0,0,0.15);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.header h1{font-size:18px;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header p{color:var(--text2);font-size:12px;margin-top:2px;}
+.header-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.badge-pill{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;}
+.bp-purple{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;}
+.bp-green{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);color:#34d399;}
+.bp-amber{background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);color:#fbbf24;}
+.tabs-outer{background:#ffffff;border-bottom:2px solid #e2e8f0;padding:0;overflow-x:auto;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.tabs{display:flex;padding:0 24px;gap:2px;min-width:max-content;}
+.tab{padding:13px 18px;cursor:pointer;font-size:13px;font-weight:500;color:#64748b;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab:hover{color:#1e293b;}
+.tab.active{color:#1d4ed8;border-bottom-color:#1d4ed8;}
+.content{padding:24px 32px;max-width:1400px;margin:0 auto;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+/* CARDS */
+.card{background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+.card-title{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+/* TAGS */
+.tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;letter-spacing:.3px;display:inline-block;}
+.t-blue{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;}
+.t-teal{background:#ccfbf1;color:#0f766e;border:1px solid #5eead4;}
+.t-purple{background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd;}
+.t-amber{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+.t-green{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+.t-gray{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;}
+.t-red{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;}
+.t-coral{background:#fff7ed;color:#9a3412;border:1px solid #fdba74;}
+/* SECTION TITLE */
+.st{font-size:15px;font-weight:700;color:#0f172a;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.mb12{margin-bottom:12px;}
+.mb16{margin-bottom:16px;}
+.mb20{margin-bottom:20px;}
+.mb24{margin-bottom:24px;}
+/* PILLAR HEADER */
+.pillar-header{padding:16px 20px;border-radius:12px 12px 0 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.pillar-body{padding:16px;}
+/* PIPELINE */
+.pipe{display:grid;grid-template-columns:1fr .85fr 1.1fr .9fr;gap:0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.pipe-col{border-right:1px solid #e2e8f0;padding:14px;}
+.pipe-col:last-child{border-right:none;}
+.pipe-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 10px;border-radius:7px;margin-bottom:12px;text-align:center;}
+.ph-src{background:rgba(59,130,246,.15);color:#93c5fd;}
+.ph-etl{background:rgba(124,58,237,.15);color:#c4b5fd;}
+.ph-mart{background:rgba(13,148,136,.15);color:#5eead4;}
+.ph-mon{background:rgba(245,158,11,.15);color:#fcd34d;}
+/* NODES */
+.src-node{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:all .2s;}
+.src-node:hover{border-color:#60a5fa;background:#dbeafe;}
+.sn-t{font-size:11px;font-weight:600;color:#1d4ed8;margin-bottom:2px;}
+.sn-s{font-size:10px;color:var(--text3);margin-bottom:5px;}
+.mart-card{background:#f0fdfa;border:1px solid #99f6e4;border-radius:9px;padding:10px;margin-bottom:9px;cursor:pointer;transition:all .2s;position:relative;}
+.mart-card:hover{border-color:#2dd4bf;background:#ccfbf1;}
+.mc-id{font-size:10px;font-weight:700;color:#0f766e;letter-spacing:.5px;margin-bottom:3px;}
+.mc-t{font-size:11px;font-weight:600;color:#0d9488;margin-bottom:3px;}
+.mc-d{font-size:10px;color:var(--text3);line-height:1.5;}
+.mc-ai{position:absolute;top:8px;right:8px;font-size:9px;background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;border:1px solid #fde68a;}
+.mon-item{border-radius:8px;padding:8px 10px;margin-bottom:7px;cursor:pointer;transition:all .2s;}
+.m-bc{background:#eff6ff;border:1px solid #bfdbfe;}
+.m-al{background:#fff5f5;border:1px solid #fecaca;}
+.m-ai{background:#fffbeb;border:1px solid #fde68a;}
+.mi-b{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;display:inline-block;margin-bottom:3px;}
+.mi-bc{background:#dbeafe;color:#1d4ed8;}
+.mi-al{background:#fee2e2;color:#b91c1c;}
+.mi-ai{background:#fef3c7;color:#92400e;}
+.mi-t{font-size:11px;font-weight:600;color:#0f172a;margin-bottom:2px;}
+.mi-s{font-size:10px;color:var(--text3);}
+.mi-l{font-size:9px;color:#7c3aed;font-weight:600;margin-top:3px;}
+/* ETL */
+.etl-item{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:7px;padding:8px 10px;margin-bottom:7px;}
+.ei-t{font-size:11px;font-weight:600;color:#6d28d9;margin-bottom:2px;}
+.ei-s{font-size:10px;color:var(--text3);}
+.etl-step{display:flex;align-items:center;gap:6px;margin:6px 0;padding:5px 9px;background:#ede9fe;border-radius:5px;}
+.etl-step span{font-size:10px;color:#7c3aed;font-weight:500;}
+/* PROCESS ROW */
+.proc-row{display:grid;grid-template-columns:36px 200px 1fr 220px;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--border);}
+.proc-row:last-child{border-bottom:none;}
+.proc-icon{font-size:20px;padding-top:2px;}
+.proc-label .pl-t{font-size:12px;font-weight:700;margin-bottom:3px;}
+.proc-label .pl-s{font-size:10px;color:var(--text3);}
+.proc-desc{font-size:11px;color:#334155;line-height:1.7;}
+.proc-sw{display:flex;flex-direction:column;gap:4px;}
+.sw-item{padding:5px 8px;border-radius:6px;font-size:10px;}
+/* REPORT TABLE */
+.rpt-table{width:100%;border-collapse:collapse;font-size:12px;}
+.rpt-table th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#64748b;border-bottom:1px solid #e2e8f0;background:#f8fafc;}
+.rpt-table td{padding:9px 12px;border-bottom:1px solid #f1f5f9;color:#334155;vertical-align:top;}
+.rpt-table tr:last-child td{border-bottom:none;}
+.rpt-table tr:hover td{background:#f8fafc;}
+/* SUMMARY MATRIX */
+.matrix{width:100%;border-collapse:collapse;}
+.matrix th{padding:10px 12px;font-size:11px;font-weight:700;color:#475569;border:1px solid #e2e8f0;text-align:center;background:#f8fafc;}
+.matrix td{padding:10px 12px;font-size:11px;color:#334155;border:1px solid #e2e8f0;vertical-align:top;}
+.matrix td:first-child{font-weight:600;color:#0f172a;background:#f8fafc;}
+/* CASAN LADDER */
+.ladder{display:flex;gap:2px;align-items:flex-end;height:80px;margin:16px 0;}
+.ladder-bar{flex:1;border-radius:4px 4px 0 0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:9px;font-weight:700;cursor:pointer;transition:opacity .2s;position:relative;}
+.ladder-bar:hover{opacity:.85;}
+.ladder-label{position:absolute;bottom:-18px;font-size:9px;color:var(--text3);white-space:nowrap;}
+/* FLEX UTILS */
+.flex{display:flex;}.gap8{gap:8px;}.gap12{gap:12px;}.items-center{align-items:center;}.justify-between{justify-content:space-between;}.flex-wrap{flex-wrap:wrap;}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:#ffffff;border:1px solid #cbd5e1;border-radius:14px;padding:24px;max-width:540px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:14px;color:#2dd4bf;}
+.modal-close{float:right;cursor:pointer;color:#64748b;font-size:18px;background:none;border:none;}
+.modal-row{margin-bottom:10px;}
+.modal-row .lbl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.modal-row .val{font-size:12px;color:#0f172a;line-height:1.6;}
+/* DIVIDER */
+hr{border:none;border-top:1px solid var(--border);margin:18px 0;}
+@media(max-width:1100px){.pipe{grid-template-columns:1fr 1fr;}.g5{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:768px){.pipe{grid-template-columns:1fr;}.g2,.g3,.g4{grid-template-columns:1fr;}.content{padding:14px;}.proc-row{grid-template-columns:36px 1fr;}.proc-sw{grid-column:1/-1;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Moonlight Group — Phân tích số hóa 3 trụ cột năng lượng & dịch vụ</h1>
+    <p>Thủy điện Nậm Na · Điện mặt trời Huội Quảng · Moonlight Building × Base.vn · CASAN Techmap 2025</p>
+  </div>
+  <div class="header-badges">
+    <span class="badge-pill bp-purple">3 Trụ cột · 8 SPV</span>
+    <span class="badge-pill bp-green">CASAN Cấp 1→3</span>
+    <span class="badge-pill bp-amber">~180MW Thủy điện + ĐMT đang triển khai</span>
+  </div>
+</div>
+
+<div class="tabs-outer">
+<div class="tabs">
+  <div class="tab active" onclick="sw('overview')">🏢 Tổng quan tập đoàn</div>
+  <div class="tab" onclick="sw('hydro')">💧 Trụ cột 1 — Thủy điện</div>
+  <div class="tab" onclick="sw('solar')">☀ Trụ cột 2 — Điện mặt trời</div>
+  <div class="tab" onclick="sw('realestate')">🏗 Trụ cột 3 — BĐS & Dịch vụ</div>
+  <div class="tab" onclick="sw('reporting')">📊 Báo cáo hợp nhất tập đoàn</div>
+</div>
+</div>
+
+<div class="content">
+
+<!-- TAB: OVERVIEW -->
+<div id="tab-overview" class="tab-content active">
+  <div class="st mb16">Cấu trúc 3 trụ cột — Moonlight Group <span class="tag t-purple">Holding: CT CP Đầu tư Moonlight · MST 0109865562</span></div>
+
+  <div class="g3 mb20">
+    <!-- PILLAR 1 -->
+    <div style="background:var(--navy2);border:1px solid rgba(13,148,136,.3);border-radius:12px;overflow:hidden;">
+      <div class="pillar-header" style="background:rgba(13,148,136,.08);">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#2dd4bf;">💧 Trụ cột 1 — Thủy điện</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px;">3 SPV · ~180MW · Lai Châu</div>
+        </div>
+        <div class="tag t-teal">CASAN Cấp 2</div>
+      </div>
+      <div class="pillar-body">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.6">Cụm Nậm Na 1-2-3 trên sông Nậm Na. Doanh thu ổn định từ PPA dài hạn với EVN. SCADA đã triển khai — thiếu lớp quản lý phía trên.</div>
+        <div class="flex flex-wrap gap8">
+          <span class="tag t-teal">Điện lực Tây Bắc (NM1 · 30MW)</span>
+          <span class="tag t-teal">Năng lượng NNa2 (66MW)</span>
+          <span class="tag t-teal">Năng lượng NNa3 (84MW)</span>
+        </div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;">
+          <div style="padding:6px 8px;background:rgba(13,148,136,.08);border-radius:6px;color:var(--text2)"><strong style="color:#5eead4">Doanh thu:</strong><br>~700tr kWh × giá PPA</div>
+          <div style="padding:6px 8px;background:rgba(13,148,136,.08);border-radius:6px;color:var(--text2)"><strong style="color:#5eead4">Hệ thống:</strong><br>SCADA + Excel</div>
+          <div style="padding:6px 8px;background:rgba(13,148,136,.08);border-radius:6px;color:var(--text2)"><strong style="color:#5eead4">Pain #1:</strong><br>Báo cáo thủ công</div>
+          <div style="padding:6px 8px;background:rgba(13,148,136,.08);border-radius:6px;color:var(--text2)"><strong style="color:#5eead4">Pain #2:</strong><br>Ca trực 24/7 thủ công</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div style="background:var(--navy2);border:1px solid rgba(245,158,11,.3);border-radius:12px;overflow:hidden;">
+      <div class="pillar-header" style="background:rgba(245,158,11,.08);">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fbbf24;">☀ Trụ cột 2 — Điện mặt trời</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px;">3 SPV · Huội Quảng, Sơn La · Đang triển khai</div>
+        </div>
+        <div class="tag t-amber">CASAN Cấp 1</div>
+      </div>
+      <div class="pillar-body">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.6">3 nhà máy ĐMT mặt đất tại địa danh Huội Quảng, huyện Quỳnh Nhai, Sơn La — khu vực liền kề với thủy điện Nậm Na. Dự án đang trong giai đoạn đầu tư / chuẩn bị vận hành thương mại.</div>
+        <div class="flex flex-wrap gap8">
+          <span class="tag t-amber">ĐMT Huội Quảng 1 (SPV)</span>
+          <span class="tag t-amber">ĐMT Huội Quảng 2 (SPV)</span>
+          <span class="tag t-amber">ĐMT Huội Quảng 3 (SPV)</span>
+        </div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;">
+          <div style="padding:6px 8px;background:rgba(245,158,11,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fcd34d">Cơ chế:</strong><br>FIT2 / DPPA / Đấu thầu</div>
+          <div style="padding:6px 8px;background:rgba(245,158,11,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fcd34d">Hệ thống:</strong><br>Chưa có (mới triển khai)</div>
+          <div style="padding:6px 8px;background:rgba(245,158,11,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fcd34d">Cơ hội:</strong><br>Thiết kế ngay từ đầu</div>
+          <div style="padding:6px 8px;background:rgba(245,158,11,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fcd34d">KPI chính:</strong><br>PR ≥ 80%, Availability ≥ 98%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div style="background:var(--navy2);border:1px solid rgba(249,115,22,.3);border-radius:12px;overflow:hidden;">
+      <div class="pillar-header" style="background:rgba(249,115,22,.08);">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fb923c;">🏗 Trụ cột 3 — BĐS & Dịch vụ</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px;">Moonlight Building · PT Nhà Gia Lâm · IPD VN</div>
+        </div>
+        <div class="tag t-coral">CASAN Cấp 1</div>
+      </div>
+      <div class="pillar-body">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.6">Tòa nhà văn phòng Moonlight Building 5 tầng (880m²/tầng) tại Long Biên — vừa là HQ của tập đoàn vừa là tài sản cho thuê. IPD VN đóng vai trò tư vấn phát triển dự án nội bộ.</div>
+        <div class="flex flex-wrap gap8">
+          <span class="tag t-coral">Moonlight Building (văn phòng cho thuê)</span>
+          <span class="tag t-coral">CT CP PT Nhà Gia Lâm (BĐS)</span>
+          <span class="tag t-coral">IPD Việt Nam (tư vấn)</span>
+        </div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;">
+          <div style="padding:6px 8px;background:rgba(249,115,22,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fdba74">Diện tích:</strong><br>5 tầng × 880m²</div>
+          <div style="padding:6px 8px;background:rgba(249,115,22,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fdba74">Hệ thống:</strong><br>Thủ công / Excel</div>
+          <div style="padding:6px 8px;background:rgba(249,115,22,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fdba74">Pain #1:</strong><br>Quản lý khách thuê</div>
+          <div style="padding:6px 8px;background:rgba(249,115,22,.08);border-radius:6px;color:var(--text2)"><strong style="color:#fdba74">Pain #2:</strong><br>Công nợ tiền thuê</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASAN DIAGNOSTIC -->
+  <div class="st mb12">Chẩn đoán CASAN — 3 trụ cột trên 7 chiều trưởng thành</div>
+  <div class="card mb20">
+    <table class="matrix">
+      <thead><tr>
+        <th style="text-align:left">Chiều đánh giá</th>
+        <th style="color:#2dd4bf">💧 Thủy điện</th>
+        <th style="color:#fbbf24">☀ Điện mặt trời</th>
+        <th style="color:#fb923c">🏗 BĐS & DV</th>
+        <th>Ghi chú / Hành động</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Chiến lược & KPI</td><td><span class="tag t-amber">Cấp 2</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">Holding cần KPI chung cho 3 trụ cột trên 1 dashboard</td></tr>
+        <tr><td>Dữ liệu & tích hợp</td><td><span class="tag t-amber">Cấp 2</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">Thủy điện có SCADA (tốt) nhưng dữ liệu chưa tích hợp về HQ</td></tr>
+        <tr><td>Quy trình & luồng</td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">Cả 3 trụ cột đều chưa có quy trình số hóa</td></tr>
+        <tr><td>Công nghệ & nền tảng</td><td><span class="tag t-amber">Cấp 2</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">SCADA thủy điện tốt; ĐMT và BĐS chưa có gì</td></tr>
+        <tr><td>Quản trị & tuân thủ</td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">Không có audit log AI, không có chính sách AI</td></tr>
+        <tr><td>Con người & vai trò</td><td><span class="tag t-amber">Cấp 2</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">Kỹ sư vận hành thủy điện tốt; thiếu data analyst tập đoàn</td></tr>
+        <tr><td>Đo lường giá trị</td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td><span class="tag t-red">Cấp 1</span></td><td style="font-size:11px">Toàn bộ báo cáo thủ công qua email/Excel</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="st mb12">Lộ trình 18 tháng — từ số hóa đến báo cáo AI</div>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div style="padding:14px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;">
+        <div style="font-size:11px;font-weight:700;color:#93c5fd;margin-bottom:6px;">Giai đoạn 1 (T1–T6)<br>Foundation — Base.vn core</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.7">
+          ✓ Triển khai Base HRM (ca trực 24/7, 3 pháp nhân thủy điện)<br>
+          ✓ Base Work+ (nhật ký ca điện tử, WO bảo trì)<br>
+          ✓ Base Asset (danh mục thiết bị thủy điện)<br>
+          ✓ Base Drive (tài liệu pháp lý, GP vận hành)<br>
+          ✓ Moonlight Building: hợp đồng thuê, khách thuê
+        </div>
+      </div>
+      <div style="padding:14px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:10px;">
+        <div style="font-size:11px;font-weight:700;color:#c4b5fd;margin-bottom:6px;">Giai đoạn 2 (T7–T12)<br>Digitize — Kết nối dữ liệu</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.7">
+          ✓ ETL pipeline SCADA → Data Lake (thủy điện)<br>
+          ✓ Triển khai SCADA ĐMT Huội Quảng 1-2-3<br>
+          ✓ 9 Data Mart (3 trụ cột × 3 domain/trụ cột)<br>
+          ✓ Dashboard thủy điện real-time (BC01–BC05)<br>
+          ✓ Alert tự động 3 trụ cột
+        </div>
+      </div>
+      <div style="padding:14px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:10px;">
+        <div style="font-size:11px;font-weight:700;color:#6ee7b7;margin-bottom:6px;">Giai đoạn 3 (T13–T18)<br>AI Layer — Báo cáo thông minh</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.7">
+          ✓ Holding Dashboard — tổng hợp 3 trụ cột<br>
+          ✓ AI Operational Assistant (hỏi đáp vận hành)<br>
+          ✓ AI Dự báo sản lượng (thủy điện + ĐMT)<br>
+          ✓ AI Weekly Report tự động cho HĐQT<br>
+          ✓ CASAN Cấp 3 (Standard) đạt được
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: HYDRO -->
+<div id="tab-hydro" class="tab-content">
+  <div class="st mb16">💧 Trụ cột 1 — Thủy điện Nậm Na 1-2-3 <span class="tag t-teal">Lai Châu · ~180MW · CASAN Cấp 2→3</span></div>
+  <div style="padding:14px 18px;background:rgba(13,148,136,.07);border:1px solid rgba(13,148,136,.25);border-radius:10px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.7">
+    <strong style="color:#2dd4bf">Trụ cột cốt lõi &amp; đã vận hành:</strong> Cụm 3 nhà máy Nậm Na (30+66+84MW) trên sông Nậm Na, tỉnh Lai Châu. Doanh thu ổn định từ PPA dài hạn với EVN. SCADA đã có (WinCC/Citect) — thiếu lớp quản lý phía trên. Đây là trụ cột ưu tiên số 1 để triển khai Base.vn vì đang hoạt động và có pain point rõ ràng ngay lập tức.
+  </div>
+
+  <!-- PIPELINE THỦY ĐIỆN (rút gọn) -->
+  <div class="pipe mb20">
+    <div class="pipe-col">
+      <div class="pipe-header ph-src">Nguồn dữ liệu</div>
+      <div class="src-node"><div class="sn-t">⚡ SCADA / DCS (Hiện có)</div><div class="sn-s">WinCC (Siemens) / Vijeo Citect · 3 NM</div><div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">OPC-UA</span><span class="tag t-blue">IEC 60870-5-104</span><span class="tag t-blue">Modbus RTU</span><span class="tag t-blue">Historian (OSIsoft PI)</span></div></div>
+      <div class="src-node"><div class="sn-t">💧 Data points SCADA</div><div class="sn-s">~200-500 tags/nhà máy</div><div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-gray">Công suất P/Q (MW)</span><span class="tag t-gray">Mực nước hồ (m)</span><span class="tag t-gray">Lưu lượng (m³/s)</span><span class="tag t-gray">Nhiệt độ máy phát (°C)</span><span class="tag t-gray">Tần số, điện áp</span></div></div>
+      <div class="src-node"><div class="sn-t">👥 Base HRM (mới)</div><div class="sn-s">Ca trực 24/7 · 3 pháp nhân</div><div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Lịch ca 3 ca/ngày</span><span class="tag t-blue">Chấm công</span><span class="tag t-blue">OT ca đêm</span><span class="tag t-blue">Phụ cấp vùng sâu</span></div></div>
+      <div class="src-node"><div class="sn-t">✅ Base Work+ (mới)</div><div class="sn-s">Nhật ký ca, WO bảo trì</div><div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Nhật ký ca điện tử</span><span class="tag t-blue">Lệnh công việc WO</span><span class="tag t-blue">Sự cố báo cáo</span><span class="tag t-blue">Kiểm tra an toàn</span></div></div>
+      <div class="src-node"><div class="sn-t">🔧 Base Asset (mới)</div><div class="sn-s">Danh mục thiết bị cơ điện</div><div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Turbine / máy phát</span><span class="tag t-blue">Lịch PM định kỳ</span><span class="tag t-blue">Kho phụ tùng dự phòng</span></div></div>
+    </div>
+    <div class="pipe-col">
+      <div class="pipe-header ph-etl">Data Lake / ETL</div>
+      <div class="etl-item"><div class="ei-t">Raw Data Lake</div><div class="ei-s">Lưu trữ bất biến · immutable</div></div>
+      <div class="etl-step"><span>→</span><span>SCADA polling 1 phút/lần</span></div>
+      <div class="etl-step"><span>→</span><span>Base API Webhook real-time</span></div>
+      <div class="etl-step"><span>→</span><span>ETL batch đêm (kế toán)</span></div>
+      <div class="etl-item" style="margin-top:8px"><div class="ei-t">6 tiêu chuẩn dữ liệu</div><div class="ei-s">Đúng · Đủ · Sạch · Sống · Thống nhất · Dùng chung</div></div>
+      <div style="padding:8px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:6px;margin:8px 0;font-size:10px;color:var(--text3)">
+        <div style="color:#fbbf24;font-weight:600;margin-bottom:4px">⚡ AI Enrichment:</div>
+        • Tính Availability Factor tự động<br>
+        • Phân loại nguyên nhân sự cố<br>
+        • Dự báo lưu lượng 7 ngày<br>
+        • Gắn nhãn mức độ bảo trì thiết bị
+      </div>
+      <div class="etl-item"><div class="ei-t">BigQuery DWH</div><div class="ei-s">Kho dữ liệu tập trung tập đoàn</div></div>
+    </div>
+    <div class="pipe-col">
+      <div class="pipe-header ph-mart">Data Mart (5 Domain)</div>
+      <div class="mart-card"><div class="mc-ai">⚡ AI</div><div class="mc-id">M1 — Vận hành phát điện</div><div class="mc-t">Operations Mart</div><div class="mc-d">Sản lượng, công suất, mực nước hồ, lưu lượng. Refresh 5 phút.</div><div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">kWh thực/kế hoạch</span><span class="tag t-teal">Availability %</span><span class="tag t-teal">Mực nước hồ</span></div></div>
+      <div class="mart-card"><div class="mc-ai">⚡ AI</div><div class="mc-id">M2 — Bảo trì thiết bị</div><div class="mc-t">Maintenance Mart</div><div class="mc-d">WO, downtime, chi phí O&M, vật tư. Nguồn: Base Asset + Base Work.</div><div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">MTTR/MTBF</span><span class="tag t-teal">Chi phí O&M</span><span class="tag t-teal">WO đúng hạn %</span></div></div>
+      <div class="mart-card"><div class="mc-id">M3 — Tài chính PPA</div><div class="mc-t">Finance Mart</div><div class="mc-d">Doanh thu PPA, đối soát EVN, chi phí, dòng tiền. Nguồn: kế toán + EVN.</div><div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">Doanh thu/kWh</span><span class="tag t-teal">P&L tháng</span><span class="tag t-teal">Đối soát EVN</span></div></div>
+      <div class="mart-card"><div class="mc-ai">⚡ AI</div><div class="mc-id">M4 — Nhân sự & ca trực</div><div class="mc-t">HR Mart</div><div class="mc-d">Ca 24/7, OT, lương, phụ cấp vùng sâu, BHXH 3 pháp nhân. Base HRM.</div><div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">OT/người</span><span class="tag t-teal">Chi phí lương</span><span class="tag t-teal">BHXH %</span></div></div>
+      <div class="mart-card"><div class="mc-id">M5 — An toàn & tuân thủ</div><div class="mc-t">Safety Mart</div><div class="mc-d">GP vận hành, kiểm định, an toàn đập, môi trường. Base Drive + Work.</div><div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">Hạn GP (ngày)</span><span class="tag t-teal">An toàn đập</span><span class="tag t-teal">Quan trắc MT</span></div></div>
+    </div>
+    <div class="pipe-col">
+      <div class="pipe-header ph-mon">Giám sát & AI</div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Dashboard</div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC01</span><div class="mi-t">Executive — HQ Moonlight</div><div class="mi-s">Tổng sản lượng 3 NM real-time</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC02</span><div class="mi-t">Vận hành real-time</div><div class="mi-s">Công suất, mực hồ, trạng thái tổ máy</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC03</span><div class="mi-t">Bảo trì & thiết bị</div><div class="mi-s">WO, downtime, chi phí O&M</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC04</span><div class="mi-t">Nhân sự ca trực</div><div class="mi-s">Chấm công, lương, OT tháng</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC05</span><div class="mi-t">Tuân thủ & an toàn</div><div class="mi-s">Hạn GP, sự cố, quan trắc</div></div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 7px">Alert</div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL01</span><div class="mi-t">Sản lượng dưới ngưỡng</div><div class="mi-s">&lt; 80% kế hoạch 3 ngày liên tiếp</div><div class="mi-l">L0 Observe</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL02</span><div class="mi-t">Trip tổ máy / Fault SCADA</div><div class="mi-s">Phản hồi &lt; 30 giây, Draft WO</div><div class="mi-l">L1 Draft WO tự động</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL03</span><div class="mi-t">Hạn GP / kiểm định</div><div class="mi-s">60/30/7 ngày trước hạn</div><div class="mi-l">L0 Observe</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL04</span><div class="mi-t">Mực nước nguy hiểm</div><div class="mi-s">Vượt MNDBT hoặc gần MNC</div><div class="mi-l">L1 Draft báo cáo xả lũ</div></div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 7px">AI Module</div>
+      <div class="mon-item m-ai"><span class="mi-b mi-ai">AI01</span><div class="mi-t">Operational Assistant 24/7</div><div class="mi-s">Hỏi đáp vận hành, Draft nhật ký ca</div><div class="mi-l">L1 Draft</div></div>
+      <div class="mon-item m-ai"><span class="mi-b mi-ai">AI02</span><div class="mi-t">Dự báo sản lượng 7 ngày</div><div class="mi-s">Thủy văn + lịch sử → kWh dự báo</div><div class="mi-l">L2 Recommend</div></div>
+      <div class="mon-item m-ai"><span class="mi-b mi-ai">AI03</span><div class="mi-t">Holding Report AI</div><div class="mi-s">Tóm tắt tuần thứ 2 · 07:30</div><div class="mi-l">L1 Draft</div></div>
+    </div>
+  </div>
+
+  <!-- QUY TRÌNH -->
+  <div class="st mb12">5 quy trình vận hành cốt lõi — Software gợi ý</div>
+  <div class="card">
+    <div class="proc-row">
+      <div class="proc-icon">⛰</div>
+      <div class="proc-label"><div class="pl-t" style="color:#2dd4bf">QT1 — Quản lý tài nguyên nước</div><div class="pl-s">Quan trắc → Dự báo → Điều tiết hồ</div></div>
+      <div class="proc-desc">Quan trắc khí tượng thủy văn → Dự báo lưu lượng 1-7 ngày (NCHMF API) → Vận hành hồ theo quy trình liên hồ → An toàn đập. <span style="color:#fbbf24">Hiện tại: thủ công, chưa có công cụ dự báo riêng.</span><br><span style="color:var(--text3)">Báo cáo: Mực nước hồ (m), lưu lượng về (m³/s), dung tích hữu ích (%)</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(59,130,246,.1);border-left:2px solid #3b82f6;color:var(--text2)"><strong style="color:#93c5fd">NCHMF API</strong> — Dự báo thủy văn</div>
+        <div class="sw-item" style="background:rgba(13,148,136,.1);border-left:2px solid #0d9488;color:var(--text2)"><strong style="color:#5eead4">SCADA Historian</strong> — OSIsoft PI</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Nhật ký hồ</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">⚡</div>
+      <div class="proc-label"><div class="pl-t" style="color:#2dd4bf">QT2 — Vận hành phát điện 24/7</div><div class="pl-s">Điều độ EVN → Khởi/dừng tổ máy → Giám sát</div></div>
+      <div class="proc-desc">Lệnh điều độ NLDC/A0 → Khởi/dừng tổ máy → Giám sát thông số SCADA 24/7 → Ghi nhật ký ca → Báo cáo sản lượng EVN. Ca 3 người × 3 ca × 3 nhà máy = 27 người trực/ngày.<br><span style="color:var(--text3)">Báo cáo: Sản lượng (kWh), Availability (%), Hệ số công suất, Tần suất sự cố</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(124,58,237,.1);border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">WinCC / Vijeo Citect</strong> — SCADA chính</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work+</strong> — Nhật ký ca điện tử</div>
+        <div class="sw-item" style="background:rgba(245,158,11,.1);border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">Base HRM</strong> — Lịch ca 24/7</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">🔧</div>
+      <div class="proc-label"><div class="pl-t" style="color:#2dd4bf">QT3 — Bảo trì & sửa chữa</div><div class="pl-s">PM định kỳ → WO → Đại tu → Kho vật tư</div></div>
+      <div class="proc-desc">PM theo giờ vận hành/lịch cố định → WO khi có sự cố/alarm SCADA → Bảo trì cơ điện (turbine, máy phát, MBA, relay) → Quản lý kho phụ tùng dự phòng → Đại tu 1-5 năm. <span style="color:#fbbf24">Hiện tại: WO viết tay, không lịch sử thiết bị.</span><br><span style="color:var(--text3)">Báo cáo: MTTR (giờ), MTBF (giờ), Chi phí O&M (VNĐ), WO đúng hạn (%)</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Asset</strong> — CMMS-lite WO & lịch PM</div>
+        <div class="sw-item" style="background:rgba(59,130,246,.1);border-left:2px solid #3b82f6;color:var(--text2)"><strong style="color:#93c5fd">Vietsoft EcoMaint</strong> — CMMS chuyên sâu</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">📊</div>
+      <div class="proc-label"><div class="pl-t" style="color:#2dd4bf">QT4 — Đo đếm & thanh toán PPA</div><div class="pl-s">AMI → Đối soát EVN → Hóa đơn</div></div>
+      <div class="proc-desc">Công tơ AMI đo sản lượng 110kV → Đối soát với điều độ EVN hàng ngày → Hóa đơn theo giá PPA cuối tháng → Thu công nợ. Doanh thu ~700 triệu kWh × giá PPA.<br><span style="color:var(--text3)">Báo cáo: Sản lượng giao EVN (kWh), Doanh thu PPA, Chênh lệch đo đếm (%), Công nợ EVN</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(13,148,136,.1);border-left:2px solid #0d9488;color:var(--text2)"><strong style="color:#5eead4">SCADA AMI</strong> — Đo đếm tự động</div>
+        <div class="sw-item" style="background:rgba(59,130,246,.1);border-left:2px solid #3b82f6;color:var(--text2)"><strong style="color:#93c5fd">ERP / Kế toán</strong> — Hóa đơn</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">⚖</div>
+      <div class="proc-label"><div class="pl-t" style="color:#2dd4bf">QT5 — Tuân thủ & an toàn pháp lý</div><div class="pl-s">Đập → Môi trường → Báo cáo nhà nước</div></div>
+      <div class="proc-desc">An toàn đập (Nghị định 114/2018) → Báo cáo môi trường 6 tháng/năm (Bộ TNMT) → Duy trì GP vận hành, GP khai thác tài nguyên nước, kiểm định thiết bị điện → Báo cáo Cục Điều tiết → Phối hợp UBND Lai Châu phòng chống lũ.<br><span style="color:var(--text3)">Báo cáo: Quan trắc MT, An toàn đập, Tình trạng GP, Sự cố ATLĐ</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Drive</strong> — Kho tài liệu pháp lý</div>
+        <div class="sw-item" style="background:rgba(239,68,68,.1);border-left:2px solid #ef4444;color:var(--text2)"><strong style="color:#fca5a5">AL03</strong> — Alert hạn GP 60/30/7 ngày</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: SOLAR -->
+<div id="tab-solar" class="tab-content">
+  <div class="st mb16">☀ Trụ cột 2 — Điện mặt trời Huội Quảng 1-2-3 <span class="tag t-amber">Sơn La · CASAN Cấp 1→3</span></div>
+
+  <!-- CONTEXT BOX -->
+  <div style="padding:14px 18px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25);border-radius:10px;margin-bottom:20px;font-size:12px;color:var(--text2);line-height:1.7">
+    <strong style="color:#fbbf24">Bối cảnh:</strong> 3 SPV điện mặt trời mặt đất tại Huội Quảng, huyện Quỳnh Nhai, Sơn La — khu vực liền kề thủy điện Nậm Na, thuận lợi về hạ tầng lưới điện 110kV đã có sẵn.
+    Đây là dự án <strong style="color:#fbbf24">đang triển khai / chuẩn bị COD</strong> — đây là thời điểm lý tưởng để thiết kế hệ thống quản lý ngay từ đầu, không phải retrofit sau.
+    Đặc thù ĐMT so với thủy điện: <strong style="color:#fbbf24">không có ca trực 24/7 tại nhà máy</strong> (giám sát từ xa qua SCADA/monitoring platform), KPI vận hành là PR (Performance Ratio) và Availability thay vì mực nước hồ.
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="st mb12">Pipeline số hóa — Điện mặt trời Huội Quảng</div>
+  <div class="pipe mb20">
+    <!-- NGUỒN -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-src">Nguồn dữ liệu</div>
+      <div class="src-node">
+        <div class="sn-t">🔆 SCADA / Monitoring Platform</div>
+        <div class="sn-s">3 nhà máy ĐMT Huội Quảng 1-2-3</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px">
+          <span class="tag t-blue">SolarEdge</span><span class="tag t-blue">Huawei FusionSolar</span><span class="tag t-blue">Fronius Solar.web</span><span class="tag t-blue">Modbus TCP</span>
+        </div>
+      </div>
+      <div class="src-node">
+        <div class="sn-t">📡 Data points inverter & string</div>
+        <div class="sn-s">Thu thập 15 phút/lần</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px">
+          <span class="tag t-gray">Công suất AC/DC (kW)</span>
+          <span class="tag t-gray">Điện áp / Dòng điện string</span>
+          <span class="tag t-gray">Nhiệt độ tấm pin (°C)</span>
+          <span class="tag t-gray">Bức xạ mặt trời (W/m²)</span>
+          <span class="tag t-gray">PR từng inverter (%)</span>
+          <span class="tag t-gray">Alarm / Fault code</span>
+        </div>
+      </div>
+      <div class="src-node">
+        <div class="sn-t">🌤 Dữ liệu thời tiết & bức xạ</div>
+        <div class="sn-s">Pyranometer tại nhà máy + API</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px">
+          <span class="tag t-gray">GHI (W/m²)</span>
+          <span class="tag t-gray">POA Irradiance</span>
+          <span class="tag t-gray">Nhiệt độ môi trường</span>
+          <span class="tag t-gray">Mây che / bóng râm</span>
+        </div>
+      </div>
+      <div class="src-node">
+        <div class="sn-t">✅ Base Work+ (O&M)</div>
+        <div class="sn-s">Bảo trì & sự cố</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px">
+          <span class="tag t-blue">WO bảo trì tấm pin</span>
+          <span class="tag t-blue">Vệ sinh định kỳ (4 lần/năm)</span>
+          <span class="tag t-blue">Checklist kiểm tra inverter</span>
+          <span class="tag t-blue">Báo cáo sự cố</span>
+        </div>
+      </div>
+      <div class="src-node">
+        <div class="sn-t">💰 Hệ thống đo đếm AMI & EVN</div>
+        <div class="sn-s">Sản lượng giao lưới</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px">
+          <span class="tag t-gray">Sản lượng AC phát lưới (kWh)</span>
+          <span class="tag t-gray">Hệ số tổn thất</span>
+          <span class="tag t-gray">Đối soát EVN hàng tháng</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETL -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-etl">Data Lake / ETL</div>
+      <div class="etl-item"><div class="ei-t">Raw Data Lake</div><div class="ei-s">Timeseries 15 phút · immutable</div></div>
+      <div class="etl-step"><span>→</span><span>Monitoring API polling 15 phút</span></div>
+      <div class="etl-step"><span>→</span><span>Base Webhook real-time (WO)</span></div>
+      <div class="etl-step"><span>→</span><span>AMI API hàng tháng</span></div>
+      <div class="etl-step"><span>→</span><span>Thời tiết API hàng giờ</span></div>
+      <div class="etl-item" style="margin-top:8px"><div class="ei-t">6 tiêu chuẩn dữ liệu</div><div class="ei-s">Kiểm tra chất lượng trước DWH</div></div>
+      <div style="padding:8px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:6px;margin:6px 0;font-size:10px;color:var(--text3)">
+        <div style="color:#fbbf24;font-weight:600;margin-bottom:4px">⚡ AI Enrichment ĐMT:</div>
+        • Tính PR từng inverter và tổng nhà máy<br>
+        • Phân tích string loss bất thường<br>
+        • So sánh sản lượng vs bức xạ lý thuyết<br>
+        • Dự báo sản lượng 24h và 7 ngày
+      </div>
+      <div class="etl-item"><div class="ei-t">BigQuery DWH</div><div class="ei-s">Hội tụ cùng thủy điện và BĐS</div></div>
+    </div>
+
+    <!-- DATA MART -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-mart">Data Mart (4 Domain)</div>
+      <div class="mart-card">
+        <div class="mc-ai">⚡ AI</div>
+        <div class="mc-id">M-S1 — Hiệu suất phát điện</div>
+        <div class="mc-t">Performance Mart</div>
+        <div class="mc-d">PR, sản lượng thực vs lý thuyết, Availability, phân tích suy giảm hiệu suất theo thời gian (degradation). 3 nhà máy.</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px">
+          <span class="tag t-teal">PR (%)</span><span class="tag t-teal">Availability (%)</span><span class="tag t-teal">kWh thực/kế hoạch</span><span class="tag t-teal">Degradation %/năm</span>
+        </div>
+      </div>
+      <div class="mart-card">
+        <div class="mc-ai">⚡ AI</div>
+        <div class="mc-id">M-S2 — Thiết bị & O&M</div>
+        <div class="mc-t">Equipment Mart</div>
+        <div class="mc-d">Trạng thái inverter, số lần fault, downtime, lịch vệ sinh tấm pin, kho vật tư dự phòng (fuse, bypass diode, cáp).</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px">
+          <span class="tag t-teal">Inverter availability</span><span class="tag t-teal">Fault frequency</span><span class="tag t-teal">Chi phí O&M/MWh</span>
+        </div>
+      </div>
+      <div class="mart-card">
+        <div class="mc-id">M-S3 — Tài chính PPA/FIT</div>
+        <div class="mc-t">Finance Mart</div>
+        <div class="mc-d">Doanh thu từ FIT2/DPPA, đối soát sản lượng EVN, chi phí O&M hàng tháng, tỷ suất IRR theo năm.</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px">
+          <span class="tag t-teal">Doanh thu (VNĐ)</span><span class="tag t-teal">Giá điện bình quân</span><span class="tag t-teal">Đối soát EVN</span>
+        </div>
+      </div>
+      <div class="mart-card">
+        <div class="mc-id">M-S4 — Tuân thủ & môi trường</div>
+        <div class="mc-t">Compliance Mart</div>
+        <div class="mc-d">Giấy phép vận hành ĐMT, kiểm định thiết bị điện, báo cáo môi trường (quản lý chất thải nguy hại pin mặt trời), đấu nối lưới điện.</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px">
+          <span class="tag t-teal">Hạn GP còn (ngày)</span><span class="tag t-teal">Chất thải nguy hại</span><span class="tag t-teal">Kiểm định</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONITOR -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-mon">Giám sát & AI</div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;">Dashboard</div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC-S1</span><div class="mi-t">Performance Dashboard</div><div class="mi-s">PR, sản lượng, Availability 3 NM</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC-S2</span><div class="mi-t">Inverter Health Map</div><div class="mi-s">Heatmap PR từng inverter/string</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC-S3</span><div class="mi-t">Tài chính ĐMT</div><div class="mi-s">Doanh thu FIT2, đối soát EVN</div></div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 7px;">Alert</div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL-S1</span><div class="mi-t">Inverter trip / fault</div><div class="mi-s">Alarm code → WO tự động</div><div class="mi-l">L1 — Draft WO</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL-S2</span><div class="mi-t">PR dưới ngưỡng</div><div class="mi-s">PR &lt; 75% trong 3 ngày → cảnh báo</div><div class="mi-l">L0 — Observe</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL-S3</span><div class="mi-t">Nhắc vệ sinh tấm pin</div><div class="mi-s">PR giảm &gt; 5% → lên lịch vệ sinh</div><div class="mi-l">L2 — Recommend</div></div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 7px;">AI Module</div>
+      <div class="mon-item m-ai"><span class="mi-b mi-ai">AI-S1</span><div class="mi-t">Dự báo sản lượng 24h/7 ngày</div><div class="mi-s">Bức xạ + thời tiết + lịch sử → kWh dự báo</div><div class="mi-l">L2 — Recommend</div></div>
+      <div class="mon-item m-ai"><span class="mi-b mi-ai">AI-S2</span><div class="mi-t">Phân tích suy giảm hiệu suất</div><div class="mi-s">Phát hiện string/panel lỗi sớm</div><div class="mi-l">L2 — Recommend bảo trì</div></div>
+    </div>
+  </div>
+
+  <!-- QUY TRÌNH VẬN HÀNH -->
+  <div class="st mb12">Chuỗi giá trị vận hành — Điện mặt trời (O&M)</div>
+  <div class="card mb20">
+    <div class="proc-row">
+      <div class="proc-icon">🔆</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fbbf24">QT-S1 — Giám sát phát điện 24/7</div><div class="pl-s">SCADA → Real-time monitoring từ xa</div></div>
+      <div class="proc-desc">Monitoring platform (SolarEdge / Huawei FusionSolar) thu thập dữ liệu từ inverter và string 15 phút/lần. <strong style="color:#fbbf24">Không có ca trực tại nhà máy</strong> — giám sát từ xa hoàn toàn. Kỹ sư O&M phản hồi sự cố trong vòng 2 giờ theo SLA. So sánh sản lượng thực vs dự báo theo bức xạ hàng giờ.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: Sản lượng AC (kWh), PR (%), Availability (%), Downtime (phút), Số fault/inverter/ngày</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(245,158,11,.1);border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">SolarEdge / Huawei FusionSolar</strong> — Monitoring cloud</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Nhật ký sự cố từ xa</div>
+        <div class="sw-item" style="background:rgba(245,158,11,.1);border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">AI-S1</strong> — Dự báo sản lượng 7 ngày</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">🔧</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fbbf24">QT-S2 — Bảo trì định kỳ (O&M)</div><div class="pl-s">PM 4 lần/năm + vệ sinh tấm pin</div></div>
+      <div class="proc-desc">Bảo dưỡng định kỳ 4 lần/năm: kiểm tra inverter, tủ điện, cáp, giá đỡ, tấm pin (vết nứt, hotspot). Vệ sinh tấm pin 4 lần/năm (bụi, phân chim làm giảm PR 3–5%). Phân tích đường cong I-V để phát hiện suy giảm sớm. Quản lý kho vật tư dự phòng (fuse, bypass diode, connector MC4).<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: WO hoàn thành (%/hạn), Chi phí O&M/MWh, Lịch sử vệ sinh, Kho vật tư dự phòng</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Asset</strong> — CMMS, lịch PM, kho vật tư</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work+</strong> — WO + checklist bảo trì</div>
+        <div class="sw-item" style="background:rgba(245,158,11,.1);border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">AI-S2</strong> — Đề xuất lịch vệ sinh tối ưu</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">📏</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fbbf24">QT-S3 — Đo đếm & thanh toán FIT/DPPA</div><div class="pl-s">AMI → Đối soát EVN → Hóa đơn</div></div>
+      <div class="proc-desc">Công tơ AMI đo sản lượng phát lưới 110kV hàng tháng. Đối soát với trung tâm điều độ EVN. Lập hóa đơn theo giá FIT2 hoặc DPPA. Thu tiền điện theo chu kỳ thanh toán. Lưu trữ hồ sơ đo đếm phục vụ kiểm định.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: Sản lượng giao lưới (kWh), Doanh thu (VNĐ), Chênh lệch đo đếm (%), Công nợ EVN</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(13,148,136,.1);border-left:2px solid #0d9488;color:var(--text2)"><strong style="color:#5eead4">SCADA AMI module</strong> — Đo đếm tự động</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Quy trình đối soát EVN</div>
+        <div class="sw-item" style="background:rgba(59,130,246,.1);border-left:2px solid #3b82f6;color:var(--text2)"><strong style="color:#93c5fd">ERP / Kế toán</strong> — Hóa đơn + công nợ</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">⚖</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fbbf24">QT-S4 — Tuân thủ & môi trường</div><div class="pl-s">GP · Kiểm định · Chất thải nguy hại</div></div>
+      <div class="proc-desc">Duy trì GP vận hành, giấy phép đấu nối lưới điện, kiểm định hệ thống bảo vệ. Quản lý chất thải nguy hại pin mặt trời hết hạn theo quy định (Thông tư 02/2022/TT-BTNMT). Báo cáo môi trường định kỳ Bộ TNMT. Kiểm tra an toàn công trình điện hàng năm.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: Hạn GP (ngày), Lượng chất thải nguy hại xử lý (kg), Kết quả kiểm định, Sự cố ATLĐ</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Drive</strong> — Tài liệu GP, kiểm định</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Workflow báo cáo môi trường</div>
+        <div class="sw-item" style="background:rgba(239,68,68,.1);border-left:2px solid #ef4444;color:var(--text2)"><strong style="color:#fca5a5">AL-S3</strong> — Alert hạn GP 60/30/7 ngày</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOFTWARE STACK -->
+  <div class="st mb12">Software stack ĐMT — SCADA/Monitoring phổ biến tại Việt Nam</div>
+  <div class="g3">
+    <div class="card"><div class="card-title" style="color:#fcd34d">SCADA / Monitoring (OT layer)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+        <div style="padding:7px 9px;background:rgba(245,158,11,.08);border-radius:6px;border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">Huawei FusionSolar</strong> — Phổ biến nhất VN, cloud monitoring inverter Huawei, API mở cho tích hợp</div>
+        <div style="padding:7px 9px;background:rgba(245,158,11,.08);border-radius:6px;border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">SolarEdge Cloud</strong> — Monitoring theo string, phát hiện hotspot, phân tích I-V</div>
+        <div style="padding:7px 9px;background:rgba(245,158,11,.08);border-radius:6px;border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">Fronius Solar.web</strong> — Phổ biến cho dự án vừa, tích hợp tốt với DCS</div>
+        <div style="padding:7px 9px;background:rgba(245,158,11,.08);border-radius:6px;border-left:2px solid #f59e0b;color:var(--text2)"><strong style="color:#fcd34d">BKAS SCADA</strong> — Giải pháp SCADA ĐMT thuần Việt, đã triển khai tại Cư Jút, Cam Lâm</div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title" style="color:#6ee7b7">Quản lý O&M (Base.vn)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work+</strong> — WO sự cố, checklist bảo trì 4 lần/năm, nhật ký sự cố từ xa</div>
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Asset</strong> — Danh mục thiết bị (inverter, tấm pin, MBA), lịch PM, kho vật tư</div>
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Drive</strong> — Tài liệu GP, kiểm định, báo cáo O&M hàng tháng gửi cổ đông</div>
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base HRM</strong> — Nhân sự O&M (ít hơn thủy điện: ~3–5 người/nhà máy, không ca 24/7)</div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title" style="color:#c4b5fd">AI & Analytics (Tầng 4–5)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">BigQuery + 4 Data Mart</strong> — M-S1 đến M-S4, hội tụ với thủy điện</div>
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">Claude API AI-S1</strong> — Dự báo sản lượng 24h/7 ngày dựa trên bức xạ + thời tiết + lịch sử PR</div>
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">Claude API AI-S2</strong> — Phân tích suy giảm hiệu suất, gợi ý thay thế string/panel lỗi</div>
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">Looker Studio</strong> — PR heatmap, dashboard Huội Quảng 1-2-3 cho HĐQT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: BĐS -->
+<div id="tab-realestate" class="tab-content">
+  <div class="st mb16">🏗 Trụ cột 3 — BĐS & Dịch vụ <span class="tag t-coral">Moonlight Building · CASAN Cấp 1→3</span></div>
+  <div style="padding:14px 18px;background:rgba(249,115,22,.07);border:1px solid rgba(249,115,22,.25);border-radius:10px;margin-bottom:20px;font-size:12px;color:var(--text2);line-height:1.7">
+    <strong style="color:#fb923c">Bối cảnh:</strong> Moonlight Building (số 5/6 phố Vũ Đức Thận, Long Biên, Hà Nội) — tòa nhà 5 tầng × 880m²/tầng, do CT CP Đầu tư Moonlight sở hữu và vận hành. Tầng 4-5 là HQ của tập đoàn, các tầng còn lại cho thuê văn phòng. IPD Việt Nam đóng vai trò phát triển dự án đầu tư mới (năng lượng, BĐS). CT CP Phát triển Nhà Gia Lâm là mảng phát triển bất động sản Long Biên.
+  </div>
+
+  <div class="pipe mb20">
+    <!-- NGUỒN -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-src">Nguồn dữ liệu</div>
+      <div class="src-node"><div class="sn-t">🏢 Quản lý khách thuê</div><div class="sn-s">Moonlight Building — tòa nhà VP</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Hợp đồng thuê</span><span class="tag t-blue">Diện tích thuê (m²)</span><span class="tag t-blue">Giá thuê/m²</span><span class="tag t-blue">Kỳ thanh toán</span><span class="tag t-blue">Phí dịch vụ</span></div>
+      </div>
+      <div class="src-node"><div class="sn-t">💰 Công nợ & dòng tiền</div><div class="sn-s">Tiền thuê, phí dịch vụ, cọc</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Tiền thuê tháng</span><span class="tag t-blue">Phí điện nước</span><span class="tag t-blue">Tiền đặt cọc</span><span class="tag t-blue">Công nợ quá hạn</span></div>
+      </div>
+      <div class="src-node"><div class="sn-t">🔧 Vận hành kỹ thuật tòa nhà</div><div class="sn-s">BMS / hệ thống kỹ thuật</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Điện, nước, điều hòa</span><span class="tag t-blue">Thang máy, PCCC</span><span class="tag t-blue">Bảo vệ, vệ sinh</span><span class="tag t-blue">Sửa chữa sự cố</span></div>
+      </div>
+      <div class="src-node"><div class="sn-t">📋 Dự án phát triển BĐS</div><div class="sn-s">IPD VN + PT Nhà Gia Lâm</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Pipeline dự án mới</span><span class="tag t-blue">Tiến độ đầu tư</span><span class="tag t-blue">Chi phí phát triển</span><span class="tag t-blue">Pháp lý dự án</span></div>
+      </div>
+      <div class="src-node"><div class="sn-t">👥 Base HRM — Nhân sự BĐS</div><div class="sn-s">BQL tòa nhà + IPD + PT Nhà Gia Lâm</div>
+        <div class="flex flex-wrap gap8" style="margin-top:5px"><span class="tag t-blue">Nhân viên BQL</span><span class="tag t-blue">Bảo vệ, vệ sinh</span><span class="tag t-blue">Kỹ thuật viên</span></div>
+      </div>
+    </div>
+
+    <!-- ETL -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-etl">Data Lake / ETL</div>
+      <div class="etl-item"><div class="ei-t">Moonlight Building Data</div><div class="ei-s">Hợp nhất từ phần mềm BQL + Base</div></div>
+      <div class="etl-step"><span>→</span><span>Base Work API (WO kỹ thuật)</span></div>
+      <div class="etl-step"><span>→</span><span>Base HRM (nhân sự BQL)</span></div>
+      <div class="etl-step"><span>→</span><span>Phần mềm BQL tòa nhà → ETL</span></div>
+      <div class="etl-step"><span>→</span><span>Kế toán: tiền thuê, công nợ</span></div>
+      <div style="padding:8px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);border-radius:6px;margin:8px 0;font-size:10px;color:var(--text3)">
+        <div style="color:#fb923c;font-weight:600;margin-bottom:4px">⚡ AI Enrichment BĐS:</div>
+        • Phân tích tỷ lệ lấp đầy theo tháng<br>
+        • Dự báo công nợ quá hạn<br>
+        • So sánh giá thuê thị trường Long Biên<br>
+        • Tóm tắt tình trạng hợp đồng sắp hết hạn
+      </div>
+      <div class="etl-item"><div class="ei-t">BigQuery DWH</div><div class="ei-s">Hội tụ cùng năng lượng</div></div>
+    </div>
+
+    <!-- MART -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-mart">Data Mart (3 Domain)</div>
+      <div class="mart-card"><div class="mc-ai">⚡ AI</div>
+        <div class="mc-id">M-R1 — Khách thuê & hợp đồng</div>
+        <div class="mc-t">Tenancy Mart</div>
+        <div class="mc-d">Danh sách khách thuê, diện tích, giá thuê, hạn hợp đồng, tỷ lệ lấp đầy theo tầng và tổng tòa nhà.</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">Lấp đầy (%)</span><span class="tag t-teal">Doanh thu thuê/m²</span><span class="tag t-teal">Hạn HĐ còn (ngày)</span></div>
+      </div>
+      <div class="mart-card">
+        <div class="mc-id">M-R2 — Tài chính & công nợ</div>
+        <div class="mc-t">Finance Mart</div>
+        <div class="mc-d">Doanh thu tiền thuê và phí dịch vụ hàng tháng, công nợ theo khách thuê, dòng tiền tòa nhà so với chi phí vận hành.</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">Doanh thu (VNĐ)</span><span class="tag t-teal">Công nợ quá hạn</span><span class="tag t-teal">Chi phí BQL</span></div>
+      </div>
+      <div class="mart-card">
+        <div class="mc-id">M-R3 — Kỹ thuật & bảo trì</div>
+        <div class="mc-t">Facility Mart</div>
+        <div class="mc-d">WO kỹ thuật tòa nhà (điện, nước, điều hòa, thang máy), lịch bảo trì định kỳ hệ thống PCCC, kiểm định thang máy.</div>
+        <div class="flex flex-wrap gap8" style="margin-top:6px"><span class="tag t-teal">WO đúng hạn (%)</span><span class="tag t-teal">Chi phí sửa chữa</span><span class="tag t-teal">Hạn kiểm định</span></div>
+      </div>
+    </div>
+
+    <!-- MONITOR -->
+    <div class="pipe-col">
+      <div class="pipe-header ph-mon">Giám sát & AI</div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;">Dashboard</div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC-R1</span><div class="mi-t">Tỷ lệ lấp đầy & doanh thu</div><div class="mi-s">Heatmap theo tầng, trend tháng</div></div>
+      <div class="mon-item m-bc"><span class="mi-b mi-bc">BC-R2</span><div class="mi-t">Công nợ & dòng tiền</div><div class="mi-s">Tiền thuê thu / chưa thu</div></div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 7px;">Alert</div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL-R1</span><div class="mi-t">HĐ thuê sắp hết hạn</div><div class="mi-s">Còn ≤ 90 ngày → nhắc gia hạn</div><div class="mi-l">L1 — Draft email gia hạn</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL-R2</span><div class="mi-t">Công nợ quá hạn 30 ngày</div><div class="mi-s">Tự động gửi nhắc nợ</div><div class="mi-l">L2 — Recommend biện pháp</div></div>
+      <div class="mon-item m-al"><span class="mi-b mi-al">AL-R3</span><div class="mi-t">Kiểm định thang máy / PCCC</div><div class="mi-s">Hạn kiểm định còn ≤ 60 ngày</div><div class="mi-l">L0 — Observe</div></div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 7px;">AI Module</div>
+      <div class="mon-item m-ai"><span class="mi-b mi-ai">AI-R1</span><div class="mi-t">Phân tích giá thuê thị trường</div><div class="mi-s">So sánh Long Biên vs benchmark</div><div class="mi-l">L2 — Recommend điều chỉnh giá</div></div>
+    </div>
+  </div>
+
+  <!-- QUY TRÌNH VẬN HÀNH TÒA NHÀ -->
+  <div class="st mb12">Chuỗi giá trị vận hành — Tòa nhà văn phòng Moonlight Building</div>
+  <div class="card mb20">
+    <div class="proc-row">
+      <div class="proc-icon">📝</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fb923c">QT-R1 — Quản lý khách thuê & hợp đồng</div><div class="pl-s">Leasing → Ký HĐ → Onboarding</div></div>
+      <div class="proc-desc">Tiếp nhận yêu cầu thuê → Xem mặt bằng → Đàm phán giá thuê → Ký hợp đồng thuê → Thu tiền cọc → Onboarding khách thuê (thẻ ra vào, bãi xe, phòng họp). Gia hạn hoặc thanh lý HĐ khi hết hạn. Hiện tại: quản lý bằng Excel và file HĐ Word — không có hệ thống.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: Số khách thuê, Diện tích cho thuê (m²), Tỷ lệ lấp đầy (%), Doanh thu thuê tháng, Hạn HĐ sắp hết</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Workflow ký HĐ, onboarding KT</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Drive</strong> — Lưu HĐ, phụ lục, biên bản nghiệm thu</div>
+        <div class="sw-item" style="background:rgba(249,115,22,.1);border-left:2px solid #f97316;color:var(--text2)"><strong style="color:#fdba74">LandSoft / PMSS</strong> — PM chuyên tòa nhà</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">💳</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fb923c">QT-R2 — Thu tiền & quản lý công nợ</div><div class="pl-s">Invoice → Thu → Công nợ</div></div>
+      <div class="proc-desc">Lập hóa đơn tiền thuê và phí dịch vụ (điện, nước, phí BQL) hàng tháng → Gửi khách thuê → Theo dõi thanh toán → Nhắc nợ nếu quá hạn → Xử lý trường hợp vi phạm HĐ. Cọc thuê hoàn trả khi thanh lý HĐ. KPI: tỷ lệ thu tiền đúng hạn ≥ 95%.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: Doanh thu thực thu vs kế hoạch, Công nợ quá hạn (VNĐ/khách thuê), Số ngày quá hạn trung bình</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Quy trình nhắc nợ, escalation</div>
+        <div class="sw-item" style="background:rgba(59,130,246,.1);border-left:2px solid #3b82f6;color:var(--text2)"><strong style="color:#93c5fd">ERP / Kế toán</strong> — Hóa đơn, sổ cái công nợ</div>
+        <div class="sw-item" style="background:rgba(239,68,68,.1);border-left:2px solid #ef4444;color:var(--text2)"><strong style="color:#fca5a5">AL-R2</strong> — Alert công nợ quá hạn 30 ngày</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">🔧</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fb923c">QT-R3 — Vận hành kỹ thuật tòa nhà</div><div class="pl-s">Facility Management 24/7</div></div>
+      <div class="proc-desc">Vận hành hệ thống điện, nước, điều hòa, thang máy, PCCC 24/7. Tiếp nhận yêu cầu sửa chữa từ khách thuê → Dispatch kỹ thuật viên → Hoàn thành WO → Đánh giá. Bảo trì định kỳ: thang máy (6 tháng), PCCC (1 năm), máy phát điện dự phòng. Kiểm tra an toàn hàng ngày bằng checklist số.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: WO hoàn thành (%/hạn), Thời gian xử lý TB (giờ), Chi phí sửa chữa tháng, Hạn kiểm định thiết bị</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Asset</strong> — Danh mục TB, lịch bảo trì định kỳ</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — WO kỹ thuật, checklist hàng ngày</div>
+        <div class="sw-item" style="background:rgba(249,115,22,.1);border-left:2px solid #f97316;color:var(--text2)"><strong style="color:#fdba74">PMSS / Vime Building</strong> — BMS tòa nhà</div>
+      </div>
+    </div>
+    <div class="proc-row">
+      <div class="proc-icon">📊</div>
+      <div class="proc-label"><div class="pl-t" style="color:#fb923c">QT-R4 — Phát triển dự án mới (IPD)</div><div class="pl-s">Pipeline → M&A → Triển khai</div></div>
+      <div class="proc-desc">IPD Việt Nam đóng vai trò phát triển dự án đầu tư mới (ĐMT Huội Quảng, BĐS Gia Lâm). Quy trình: screening cơ hội → thẩm định (due diligence) → đàm phán → ký kết → triển khai. Quản lý pipeline dự án, theo dõi tiến độ đầu tư, lập báo cáo cho HĐQT về danh mục dự án.<br><br><span style="color:var(--text3)">Dữ liệu báo cáo: Số dự án trong pipeline, Giai đoạn từng dự án, Tổng vốn đầu tư đã cam kết, IRR dự kiến</span></div>
+      <div class="proc-sw">
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work</strong> — Pipeline dự án, milestone</div>
+        <div class="sw-item" style="background:rgba(16,185,129,.1);border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Drive</strong> — Hồ sơ pháp lý dự án</div>
+        <div class="sw-item" style="background:rgba(124,58,237,.1);border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">AI-R1</strong> — Phân tích thị trường BĐS, tài chính</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st mb12">Software stack — BĐS & Quản lý tòa nhà</div>
+  <div class="g3">
+    <div class="card"><div class="card-title" style="color:#fdba74">Phần mềm quản lý tòa nhà VP (thị trường VN)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+        <div style="padding:7px 9px;background:rgba(249,115,22,.08);border-radius:6px;border-left:2px solid #f97316;color:var(--text2)"><strong style="color:#fdba74">LandSoft Building</strong> — Quản lý khách thuê, hợp đồng, công nợ, phí dịch vụ. Phổ biến tại VN cho VP cho thuê</div>
+        <div style="padding:7px 9px;background:rgba(249,115,22,.08);border-radius:6px;border-left:2px solid #f97316;color:var(--text2)"><strong style="color:#fdba74">PMSS Office (Salink)</strong> — Số hóa quy trình BQL VP: checklist, chấm công QR, thông báo phí, công nợ</div>
+        <div style="padding:7px 9px;background:rgba(249,115,22,.08);border-radius:6px;border-left:2px solid #f97316;color:var(--text2)"><strong style="color:#fdba74">Vime Building</strong> — Quản lý tài sản, bảo trì tòa nhà. Lựa chọn hàng đầu tại VN</div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title" style="color:#6ee7b7">Base.vn — Phần bổ sung quy trình</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Work+</strong> — WO kỹ thuật tòa nhà, onboarding KT, quy trình xử lý yêu cầu</div>
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Asset</strong> — Danh mục thiết bị (thang máy, PCCC, điều hòa), lịch kiểm định</div>
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base HRM</strong> — Nhân sự BQL, bảo vệ (ca 3 người), vệ sinh, kỹ thuật viên</div>
+        <div style="padding:7px 9px;background:rgba(16,185,129,.08);border-radius:6px;border-left:2px solid #10b981;color:var(--text2)"><strong style="color:#6ee7b7">Base Drive</strong> — HĐ thuê, giấy phép PCCC, kiểm định thang máy</div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title" style="color:#c4b5fd">AI & Analytics</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">BigQuery + 3 Data Mart</strong> — M-R1 đến M-R3, hội tụ về DWH tập đoàn</div>
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">Claude API AI-R1</strong> — Phân tích giá thuê thị trường Long Biên, benchmark so sánh</div>
+        <div style="padding:7px 9px;background:rgba(124,58,237,.08);border-radius:6px;border-left:2px solid #7c3aed;color:var(--text2)"><strong style="color:#c4b5fd">Looker Studio</strong> — Dashboard lấp đầy + doanh thu + công nợ cho HĐQT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: REPORTING -->
+<div id="tab-reporting" class="tab-content">
+  <div class="st mb16">📊 Báo cáo hợp nhất tập đoàn — Từ số hóa đến quyết định <span class="tag t-purple">Holding Moonlight Group</span></div>
+
+  <!-- KIẾN TRÚC HỢP NHẤT -->
+  <div class="card mb20">
+    <div class="card-title">Kiến trúc báo cáo hội tụ — 3 trụ cột → 1 DWH → 1 Holding Dashboard</div>
+    <div style="display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;gap:0;align-items:start;padding:16px 0;">
+      <!-- 3 pillars -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:10px 12px;background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#2dd4bf;margin-bottom:4px">💧 Thủy điện (3 NM)</div>
+          <div style="color:var(--text3)">SCADA → Base HRM/Work/Asset → 5 Data Mart</div>
+          <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px"><span class="tag t-teal">M1 Vận hành</span><span class="tag t-teal">M2 Bảo trì</span><span class="tag t-teal">M3 Finance</span><span class="tag t-teal">M4 HR</span><span class="tag t-teal">M5 Safety</span></div>
+        </div>
+        <div style="padding:10px 12px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#fbbf24;margin-bottom:4px">☀ Điện mặt trời (3 NM)</div>
+          <div style="color:var(--text3)">Monitoring Platform → Base Work/Asset → 4 Data Mart</div>
+          <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px"><span class="tag t-amber">M-S1 Perf</span><span class="tag t-amber">M-S2 Equipment</span><span class="tag t-amber">M-S3 Finance</span><span class="tag t-amber">M-S4 Compliance</span></div>
+        </div>
+        <div style="padding:10px 12px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#fb923c;margin-bottom:4px">🏗 BĐS & Dịch vụ</div>
+          <div style="color:var(--text3)">BQL + Base Work/Drive → 3 Data Mart</div>
+          <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px"><span class="tag t-coral">M-R1 Tenancy</span><span class="tag t-coral">M-R2 Finance</span><span class="tag t-coral">M-R3 Facility</span></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text3);padding:40px 0">→</div>
+      <!-- DWH -->
+      <div style="padding:14px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:10px;font-size:11px;">
+        <div style="font-weight:700;color:#c4b5fd;margin-bottom:8px;font-size:13px">🗄 BigQuery DWH<br>Kho dữ liệu tập đoàn</div>
+        <div style="color:var(--text3);margin-bottom:8px">Tập hợp 12 Data Mart từ 3 trụ cột. Chuẩn hóa đơn vị và schema. Refresh theo lịch: 15 phút (vận hành) / 1 giờ (tài chính) / 1 ngày (HR).</div>
+        <div style="padding:8px;background:rgba(245,158,11,.08);border-radius:6px;margin-top:8px">
+          <div style="color:#fbbf24;font-weight:600;font-size:10px;margin-bottom:4px">⚡ Cross-pillar AI Enrichment:</div>
+          <div style="color:var(--text3);font-size:10px">• Tổng doanh thu tập đoàn (PPA + FIT + tiền thuê)<br>• Tổng nhân sự 3 trụ cột × chi phí lương<br>• Hội tụ cảnh báo pháp lý (GP hết hạn) tất cả SPV<br>• ROI theo từng SPV so sánh</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text3);padding:40px 0">→</div>
+      <!-- OUTPUT -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:10px 12px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#93c5fd;margin-bottom:4px">📱 Holding Dashboard (HĐQT)</div>
+          <div style="color:var(--text3)">Tổng doanh thu 3 trụ cột, nhân sự, rủi ro pháp lý. Mobile-first. Refresh 15 phút.</div>
+        </div>
+        <div style="padding:10px 12px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#fca5a5;margin-bottom:4px">🚨 Alert Hub (tập đoàn)</div>
+          <div style="color:var(--text3)">10+ alert từ 3 trụ cột, tập trung về 1 inbox Base Message cho HĐQT.</div>
+        </div>
+        <div style="padding:10px 12px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#fcd34d;margin-bottom:4px">🤖 AI Weekly Report</div>
+          <div style="color:var(--text3)">Sáng thứ 2 · 07:30 → Tóm tắt tuần 3 trụ cột tự động → Chủ tịch Vũ Bảo Trung.</div>
+        </div>
+        <div style="padding:10px 12px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);border-radius:8px;font-size:11px;">
+          <div style="font-weight:700;color:#6ee7b7;margin-bottom:4px">💬 AI Assistant 24/7</div>
+          <div style="color:var(--text3)">Hỏi đáp dữ liệu 12 Data Mart. Hỏi về bất kỳ nhà máy hoặc tài sản nào.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOLDING DASHBOARD CHI TIẾT -->
+  <div class="st mb12">Holding Dashboard — Nội dung & cấu trúc chi tiết</div>
+  <div class="g2 mb20">
+    <div class="card">
+      <div class="card-title" style="color:#93c5fd">🔵 Section 1 — Năng lượng tổng hợp</div>
+      <table class="rpt-table">
+        <thead><tr><th>KPI</th><th>Nguồn</th><th>Tần suất</th></tr></thead>
+        <tbody>
+          <tr><td>Sản lượng điện tổng (kWh/ngày)</td><td>M1 + M-S1</td><td>Real-time</td></tr>
+          <tr><td>Sản lượng vs kế hoạch (%)</td><td>M1 + M-S1</td><td>Hàng giờ</td></tr>
+          <tr><td>Doanh thu PPA ước tính tháng</td><td>M3 + M-S3</td><td>Hàng ngày</td></tr>
+          <tr><td>Availability tổng hợp 6 NM (%)</td><td>M1 + M-S1</td><td>Real-time</td></tr>
+          <tr><td>PR trung bình 3 NM ĐMT (%)</td><td>M-S1</td><td>Hàng giờ</td></tr>
+          <tr><td>Sự cố đang mở (số WO)</td><td>M2 + M-S2</td><td>Real-time</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#fdba74">🟠 Section 2 — BĐS & Tài chính</div>
+      <table class="rpt-table">
+        <thead><tr><th>KPI</th><th>Nguồn</th><th>Tần suất</th></tr></thead>
+        <tbody>
+          <tr><td>Tỷ lệ lấp đầy Moonlight Building (%)</td><td>M-R1</td><td>Hàng ngày</td></tr>
+          <tr><td>Doanh thu tiền thuê tháng (VNĐ)</td><td>M-R2</td><td>Hàng ngày</td></tr>
+          <tr><td>Công nợ tiền thuê quá hạn (VNĐ)</td><td>M-R2</td><td>Hàng ngày</td></tr>
+          <tr><td>Tổng doanh thu tập đoàn (VNĐ/tháng)</td><td>M3+M-S3+M-R2</td><td>Hàng tháng</td></tr>
+          <tr><td>Chi phí O&M tổng (VNĐ/tháng)</td><td>M2+M-S2+M-R3</td><td>Hàng tháng</td></tr>
+          <tr><td>EBITDA ước tính tháng</td><td>Tất cả Finance Mart</td><td>Hàng tháng</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#6ee7b7">🟢 Section 3 — Nhân sự tập đoàn</div>
+      <table class="rpt-table">
+        <thead><tr><th>KPI</th><th>Nguồn</th><th>Tần suất</th></tr></thead>
+        <tbody>
+          <tr><td>Tổng nhân sự (người)</td><td>M4 + M-S (HR)</td><td>Hàng ngày</td></tr>
+          <tr><td>Chi phí lương tháng (VNĐ)</td><td>M4</td><td>Hàng tháng</td></tr>
+          <tr><td>Giờ OT tổng (giờ/tháng)</td><td>M4</td><td>Hàng tháng</td></tr>
+          <tr><td>Ca trực thiếu hụt (số ca)</td><td>M4</td><td>Hàng ngày</td></tr>
+          <tr><td>Biến động nhân sự (in/out)</td><td>M4</td><td>Hàng tháng</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#fca5a5">🔴 Section 4 — Rủi ro & tuân thủ</div>
+      <table class="rpt-table">
+        <thead><tr><th>Hạng mục</th><th>Nguồn</th><th>Trạng thái</th></tr></thead>
+        <tbody>
+          <tr><td>GP vận hành hết hạn sớm nhất</td><td>M5 + M-S4</td><td>Còn X ngày</td></tr>
+          <tr><td>Kiểm định thiết bị sắp hết hạn</td><td>M5 + M-R3</td><td>Còn X ngày</td></tr>
+          <tr><td>HĐ thuê sắp hết hạn (BĐS)</td><td>M-R1</td><td>Số HĐ</td></tr>
+          <tr><td>Sự cố ATLĐ tháng</td><td>M5 + M-S4</td><td>Số sự cố</td></tr>
+          <tr><td>Alert chưa xử lý</td><td>Tất cả</td><td>Số alert</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AI WEEKLY REPORT TEMPLATE -->
+  <div class="st mb12">AI Weekly Report — Cấu trúc báo cáo tự động thứ 2 · 07:30</div>
+  <div class="card mb20" style="border-color:rgba(245,158,11,.3)">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:11px">
+      <div>
+        <div style="font-weight:700;color:#fbbf24;margin-bottom:8px">📧 Kính gửi: Chủ tịch HĐQT Vũ Bảo Trung</div>
+        <div style="color:var(--text2);line-height:1.8">
+          <strong style="color:var(--text)">1. Sản lượng điện tuần [Ngày]</strong><br>
+          • Thủy điện Nậm Na: [X] triệu kWh (vs kế hoạch: [±Y]%)<br>
+          • ĐMT Huội Quảng: [X] triệu kWh · PR trung bình [Z]%<br>
+          • Tổng doanh thu ước tính: [VNĐ]<br><br>
+          <strong style="color:var(--text)">2. Sự cố nổi bật</strong><br>
+          • [Tên nhà máy]: [Mô tả sự cố ngắn] — Trạng thái: [Đã xử lý/Đang xử lý]<br>
+          • [Thiết bị]: [Alarm] — WO #[số] đã phát sinh<br><br>
+          <strong style="color:var(--text)">3. Moonlight Building</strong><br>
+          • Lấp đầy: [X]% ([Y]m² / [Z]m² tổng)<br>
+          • Công nợ quá hạn: [VNĐ] từ [N] khách thuê
+        </div>
+      </div>
+      <div>
+        <div style="color:var(--text2);line-height:1.8">
+          <strong style="color:var(--text)">4. Tuân thủ & cảnh báo</strong><br>
+          • GP [Nhà máy X]: còn [N] ngày → Hành động cần thiết<br>
+          • Kiểm định [Thiết bị]: còn [N] ngày<br>
+          • HĐ thuê [Khách thuê Y]: hết hạn [Ngày] → Đề xuất gia hạn<br><br>
+          <strong style="color:var(--text)">5. Nhân sự tuần</strong><br>
+          • Tổng nhân sự hoạt động: [N] người<br>
+          • OT tuần: [X] giờ / Chi phí ước: [VNĐ]<br>
+          • Biến động: [Tuyển mới/Nghỉ việc nếu có]<br><br>
+          <strong style="color:var(--text)">6. Điểm cần HĐQT quyết định</strong><br>
+          • [Mục 1 cần quyết định]<br>
+          • [Mục 2 cần quyết định]<br><br>
+          <em style="color:var(--text3)">Báo cáo tự động bởi AI03 — Claude API × BigQuery DWH<br>Mức ủy quyền: L1 Draft · HĐQT review và confirm</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERMISSION TABLE -->
+  <div class="st mb12">Bảng phân quyền tổng hợp — Toàn bộ 3 trụ cột</div>
+  <div class="card">
+    <table class="rpt-table">
+      <thead><tr>
+        <th>Bộ phận / Vai trò</th>
+        <th>Thủy điện</th>
+        <th>ĐMT Huội Quảng</th>
+        <th>BĐS & Dịch vụ</th>
+        <th>Holding Dashboard</th>
+        <th>AI Module</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--text)">Chủ tịch HĐQT<br>Vũ Bảo Trung</strong></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-teal">BC01 BC02</span><span class="tag t-red">All AL</span></div></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-amber">BC-S1 BC-S3</span></div></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-coral">BC-R1 BC-R2</span></div></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-blue">Tất cả</span></div></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-purple">AI03 (Weekly)</span></div></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--text)">GĐ Nhà máy<br>Thủy điện (×3)</strong></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-teal">BC01–BC05</span><span class="tag t-red">AL01–AL04</span></div></td>
+          <td>—</td>
+          <td>—</td>
+          <td>Chỉ nhà máy mình</td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-purple">AI01 AI02</span></div></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--text)">Kỹ sư vận hành ĐMT<br>O&M team</strong></td>
+          <td>—</td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-amber">BC-S1 BC-S2</span><span class="tag t-red">AL-S1 AL-S2</span></div></td>
+          <td>—</td>
+          <td>—</td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-purple">AI-S1 AI-S2</span></div></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--text)">BQL Tòa nhà</strong></td>
+          <td>—</td>
+          <td>—</td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-coral">BC-R1 BC-R2 BC-R3</span><span class="tag t-red">AL-R1–R3</span></div></td>
+          <td>—</td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-purple">AI-R1</span></div></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--text)">HR / Tài chính HQ</strong></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-teal">BC04 BC05</span></div></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-amber">BC-S3</span></div></td>
+          <td><div class="flex flex-wrap gap8"><span class="tag t-coral">BC-R2</span></div></td>
+          <td>Finance section</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeM()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeM()">✕</button>
+    <h3 id="mt"></h3>
+    <div id="mb"></div>
+  </div>
+</div>
+
+<script>
+function sw(id){
+  document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  const tc=document.getElementById("tab-"+id);
+  if(tc)tc.classList.add("active");
+  const ids=["overview","hydro","solar","realestate","reporting"];
+  const idx=ids.indexOf(id);
+  const tabs=document.querySelectorAll(".tab");
+  if(tabs[idx])tabs[idx].classList.add("active");
+  window.scrollTo(0,80);
+}
+function closeM(){document.getElementById("modal").classList.remove("open");}
+</script>
+</div></body></html>
